@@ -1,0 +1,111 @@
+/* pages/index/index.wxss */
+.container {
+    padding: 20rpx;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* 通用样式 */
+  .section-title {
+    font-weight: bold;
+    margin: 20rpx 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* 表单元素组 */
+  .form-group {
+    margin-bottom: 30rpx;
+  }
+  
+  .form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15rpx;
+    flex-wrap: wrap;
+  }
+  
+  .form-label {
+    min-width: 120rpx;
+    margin-right: 10rpx;
+  }
+  
+  .form-input {
+    flex: 1;
+    border: 1rpx solid #eee;
+    border-radius: 8rpx;
+    padding: 12rpx;
+    min-width: 200rpx;
+  }
+  
+  /* 按钮区域 */
+  .action-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 20rpx 0;
+  }
+  
+  /* 订阅列表 */
+  .subscription-list {
+    margin-top: 20rpx;
+    border-top: 1rpx solid #eee;
+    padding-top: 10rpx;
+  }
+  
+  .subscription-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10rpx;
+    border-bottom: 1rpx dashed #eee;
+  }
+  
+  /* 控制台输出 */
+  .console-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20rpx;
+  }
+  
+  .console-output {
+    flex: 1;
+    border: 1rpx solid #eee;
+    padding: 10rpx;
+    font-family: monospace;
+    font-size: 24rpx;
+    overflow-y: auto;
+  }
+  
+  /* 日志类型颜色 */
+  .log-normal {
+    color: #333;
+  }
+  
+  .log-error {
+    color: #f44336;
+  }
+  
+  .log-warning {
+    color: #ff9800;
+  }
+  
+  .log-success {
+    color: #4caf50;
+  }
+  
+  /* 小尺寸按钮 */
+  .btn-sm {
+    font-size: 24rpx;
+    padding: 0 15rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+  }
+  
+  /* 开关控件样式 */
+  .switch-wrapper {
+    display: flex;
+    align-items: center;
+  }

@@ -1,0 +1,239 @@
+<!-- pages/index/index.wxml -->
+<view class="container">
+  <!-- 配置表单 -->
+  <view class="config-section">
+    <view class="section-title">连接配置</view>
+    
+    <view class="form-item">
+      <text>协议</text>
+      <picker 
+        range="['wxs','wss']" 
+        value="{{configForm.protocol === 'wxs' ? 0 : 1}}" 
+        bindchange="handleProtocolChange"
+      >
+        <view>{{configForm.protocol}}://</view>
+      </picker>
+      <input 
+        placeholder="服务器地址" 
+        value="{{configForm.host}}" 
+        data-field="host" 
+        bindinput="handleConfigInput" 
+      />
+      <input 
+        placeholder="端口" 
+        type="number" 
+        value="{{configForm.port}}" 
+        data-field="port" 
+        bindinput="handleConfigInput" 
+      />
+    </view>
+
+    <view class="form-item">
+      <text>用户名</text>
+      <input 
+        placeholder="xxxx" 
+        value="{{configForm.username}}" 
+        data-field="username" 
+        bindinput="handleConfigInput" 
+      />
+    </view>
+
+    <view class="form-item">
+      <text>密码</text>
+      <input 
+        password 
+        placeholder="xxxx" 
+        value="{{configForm.password}}" 
+        data-field="password" 
+        bindinput="handleConfigInput" 
+      />
+    </view>
+
+    <view class="form-actions">
+      <button 
+        type="primary" 
+        size="mini" 
+        bindtap="toggleAdvanced"
+      >
+        {{advancedVisible ? '隐藏' : '显示'}}高级选项
+      </button>
+      <button 
+        type="primary" 
+        size="mini" 
+        bindtap="saveConfig"
+      >
+        保存配置
+      </button>
+    </view>
+
+    <!-- 高级选项 -->
+    <view hidden="{{!advancedVisible}}">
+      <view class="form-item">
+        <text>路径</text>
+        <input 
+          placeholder="/mqtt" 
+          value="{{configForm.path}}" 
+          data-field="path" 
+          bindinput="handleConfigInput" 
+        />
+      </view>
+      
+      <view class="form-item">
+        <text>ClientID</text>
+        <input 
+          placeholder="自动生成" 
+          value="{{configForm.clientId}}" 
+          data-field="clientId" 
+          bindinput="handleConfigInput" 
+        />
+      </view>
+      
+      <view class="form-item">
+        <text>心跳(秒)</text>
+        <input 
+          type="number" 
+          value="{{configForm.keepalive}}" 
+          data-field="keepalive" 
+          bindinput="handleConfigInput" 
+        />
+      </view>
+      
+      <view class="form-item">
+        <text>清除会话</text>
+        <switch 
+          checked="{{configForm.cleanSession}}" 
+          bindchange="handleConfigSwitch" 
+          data-field="cleanSession"
+        />
+      </view>
+      
+      <view class="form-item">
+        <text>自动重连</text>
+        <switch 
+          checked="{{configForm.autoReconnect}}" 
+          bindchange="handleConfigSwitch" 
+          data-field="autoReconnect"
+        />
+      </view>
+    </view>
+  </view>
+
+  <!-- 连接控制 -->
+  <view class="action-section">
+    <button 
+      type="{{isConnected ? 'warn' : 'primary'}}" 
+      bindtap="{{isConnected ? 'disconnect' : 'connect'}}"
+    >
+      {{isConnected ? '断开连接' : '连接MQTT'}}
+    </button>
+  </view>
+
+  <!-- 订阅/发布区域 -->
+  <view class="topic-section" hidden="{{!isConnected}}">
+    <view class="section-title">主题操作</view>
+    
+    <view class="form-item">
+      <input 
+        placeholder="输入订阅主题" 
+        value="{{topicForm.subscribeTopic}}" 
+        data-field="subscribeTopic" 
+        bindinput="handleTopicInput" 
+      />
+      <button 
+        type="primary" 
+        size="mini" 
+        bindtap="subscribe"
+      >
+        订阅
+      </button>
+    </view>
+    
+    <view class="form-item">
+      <input 
+        placeholder="输入发布主题" 
+        value="{{topicForm.publishTopic}}" 
+        data-field="publishTopic" 
+        bindinput="handleTopicInput" 
+      />
+      <input 
+        placeholder="消息内容" 
+        value="{{topicForm.publishMessage}}" 
+        data-field="publishMessage" 
+        bindinput="handleTopicInput" 
+      />
+    </view>
+    
+    <view class="form-item">
+      <text>QoS</text>
+      <picker 
+        range="['0','1','2']" 
+        value="{{topicForm.qos}}" 
+        bindchange="handleQosChange"
+      >
+        <view>QoS {{topicForm.qos}}</view>
+      </picker>
+      <text>保留消息</text>
+      <switch 
+        checked="{{topicForm.retain}}" 
+        bindchange="handleTopicSwitch" 
+        data-field="retain"
+      />
+      <button 
+        type="primary" 
+        size="mini" 
+        bindtap="publish"
+      >
+        发布
+      </button>
+    </view>
+    
+    <!-- 订阅列表 -->
+    <view class="subscription-list" hidden="{{subscriptions.length === 0}}">
+      <view class="list-title">当前订阅:</view>
+      <view 
+        class="subscription-item" 
+        wx:for="{{subscriptions}}" 
+        wx:key="topic"
+      >
+        <text>{{item[0]}} (QoS {{item[1]}})</text>
+        <button 
+          type="warn" 
+          size="mini" 
+          bindtap="unsubscribe" 
+          data-topic="{{item[0]}}"
+        >
+          取消
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 日志控制台 -->
+  <view class="console-section">
+    <view class="section-title">
+      控制台
+      <button 
+        type="default" 
+        size="mini" 
+        bindtap="clearLogs"
+      >
+        清空
+      </button>
+    </view>
+    
+    <scroll-view 
+      scroll-y 
+      class="console-output"
+      scroll-top="{{scrollTop}}"
+      scroll-with-animation
+    >
+      <view 
+        class="log-item log-{{item.type}}" 
+        wx:for="{{logs}}" 
+        wx:key="timestamp"
+      >
+        [{{item.time}}] {{item.content}}
+      </view>
+    </scroll-view>
+  </view>
+</view>
