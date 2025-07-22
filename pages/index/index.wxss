@@ -1,12 +1,10 @@
-/* pages/index/index.wxss */
 .container {
     padding: 20rpx;
     height: 100vh;
     display: flex;
     flex-direction: column;
   }
-  
-  /* 通用样式 */
+
   .section-title {
     font-weight: bold;
     margin: 20rpx 0;
@@ -14,8 +12,7 @@
     justify-content: space-between;
     align-items: center;
   }
-  
-  /* 表单元素组 */
+
   .form-group {
     margin-bottom: 30rpx;
   }
@@ -39,15 +36,13 @@
     padding: 12rpx;
     min-width: 200rpx;
   }
-  
-  /* 按钮区域 */
+
   .action-buttons {
     display: flex;
     justify-content: space-around;
     margin: 20rpx 0;
   }
-  
-  /* 订阅列表 */
+
   .subscription-list {
     margin-top: 20rpx;
     border-top: 1rpx solid #eee;
@@ -61,8 +56,7 @@
     padding: 10rpx;
     border-bottom: 1rpx dashed #eee;
   }
-  
-  /* 控制台输出 */
+
   .console-container {
     flex: 1;
     display: flex;
@@ -78,8 +72,7 @@
     font-size: 24rpx;
     overflow-y: auto;
   }
-  
-  /* 日志类型颜色 */
+
   .log-normal {
     color: #333;
   }
@@ -95,17 +88,40 @@
   .log-success {
     color: #4caf50;
   }
-  
-  /* 小尺寸按钮 */
+
   .btn-sm {
     font-size: 24rpx;
     padding: 0 15rpx;
     height: 60rpx;
     line-height: 60rpx;
   }
-  
-  /* 开关控件样式 */
+
   .switch-wrapper {
     display: flex;
     align-items: center;
   }
+
+.footer-section {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.tool-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.tool-info {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.tool-info text {
+  display: block;
+}
